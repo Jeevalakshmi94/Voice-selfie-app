@@ -20,6 +20,11 @@ function speak(){
     var utterThis=new SpeechSynthesisUtterance(speak_data)
     synth.speak(utterThis)
     Webcam.attach(camera)
+    setTimeout(function()
+    { 
+        take_selfie(); 
+        save();
+    }, 5000);
 }
 camera=document.getElementById("camera")
 Webcam.set({
@@ -29,3 +34,18 @@ Webcam.set({
     jpeg_quality: 90
   });
   Webcam.attach( 'camera' );
+function take_selfie()
+{
+    Webcam.snap(function(data_uri) {
+        document.getElementById("result").innerHTML = '<img id="selfie_image" src="'+data_uri+'"/>';
+    });
+}
+
+
+function save()
+{
+  link = document.getElementById("link");
+  image = document.getElementById("selfie_image").src ;
+  link.href = image;
+  link.click();
+}
